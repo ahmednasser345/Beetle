@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card-wrapper">
+
+  <div class="card" style="height: 750px;">
+
+    <h1 class="center" style="font-family: 'Aquire', sans-serif;">Add a label</h1>
+
+    <div class="center">
+      
+      <img src="/static/image/logo.png" width="80" height="120" alt="logo">
+
+    </div>
+    
+    <div style="margin: 10%;">
+      
+      <form name="form_input_label">
+  
+        <input type="text" name="label" class="field" placeholder="Label" required>
+  
+        <p class="error error--hidden"></p>
+  
+        <input type="submit" value="Add" class="btn btn-dark" style="background-color: black;">    
+      </form>
+
+    </div>
+    
+  </div>
+
+</div>
+<script src="/static/js/jquery.js"></script>
+<script>
+  $("form[name=form_input_label").submit(function(e) {
+  var $form = $(this);
+  var $error = $form.find(".error");
+  $error.text("Please wait...").removeClass("error--hidden").css('color', 'green')
+  var data = $form.serialize();
+  $.ajax({
+    url: "/profile/saveNewLabel",
+    type: "GET",
+    data: data,
+    dataType: "json",
+    success: function(resp) {
+      window.location.href = "/profile";
+    },
+    error: function(resp) {
+      $error.text(resp.responseJSON.error).removeClass("error--hidden").css('color', 'red');
+    }
+  });
+
+  e.preventDefault();
+});
+</script>
+{% endblock %}

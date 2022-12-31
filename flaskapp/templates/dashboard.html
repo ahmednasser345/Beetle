@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block content %}
+<title>Dashboard Page</title>
+<div class="card-wrapper">
+  <div class="card" style="height: 750px">
+    <div>
+      <div style="float: left">
+        <h1 style="font-family: 'Aquire', sans-serif">Beetle</h1>
+      </div>
+      <div style="float: right; margin-top: 0.5em">
+        <a href="/profile"
+          ><img
+            src="../static/image/profile.png"
+            height="55px"
+            ,
+            width="50px"
+            alt="profile"
+        /></a>
+      </div>
+    </div>
+    <div
+      style="margin: 10em 1em; display: flex; justify-content: space-between"
+    >
+      <div style="text-align: center">
+        <a href="/annotate"
+          ><img
+            src="../static/image/annotate.png"
+            width="80px"
+            height="auto"
+            alt="annotate"
+        /></a>
+        <p style="margin-top: 0">Annotate</p>
+      </div>
+      <div style="text-align: center">
+        <a href="/collect"
+          ><img
+            src="../static/image/collect.png"
+            width="85px"
+            height="auto"
+            alt="collect"
+        /></a>
+        <p style="margin-top: 0">Collect data</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<title>Collect Page</title>
+<div class="card-wrapper">
+
+  <div class="card" style="height: 750px;">
+    
+
+    <h1 class="left" style="font-family: 'Aquire', sans-serif;">Collect</h1>
+
+    <div class="center">
+      
+      <img src="/static/image/logo.png" width="80" height="120" alt="logo">
+
+    </div>
+    
+    <div style="margin: 0 10%;">
+      
+      <form name="form_scrapped">
+  
+        <input type="text" name="hashtag" class="field" placeholder="Hashtag" required>
+  
+        <input type="text" name="date" class="field" placeholder="YYYY-MM--DD" required>
+  
+        <p class="error error--hidden"></p>
+  
+        <input type="submit" value="Search" class="btn btn-dark" style="background-color: black;">
+        
+        
+      </form>
+
+    </div>
+    
+  </div>
+
+</div>
+
+  {% endblock %}

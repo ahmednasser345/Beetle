@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<title>Login</title>
+<div class="card-wrapper">
+
+  <div class="card" style="height: 750px;">
+
+    <h1 class="left" style="font-family: 'Aquire', sans-serif;">Sign In</h1>
+
+    <div class="center">
+      
+      <img src="/static/image/logo.png" width="80" height="120" alt="logo">
+
+    </div>
+
+    <div style="margin: 0 10%;">
+      
+      <form name="login_form">
+  
+        <input type="email" name="email" class="field" placeholder="Email" required>
+  
+        <input type="password" name="password" class="field" placeholder="Password" required>
+  
+        <p class="error error--hidden"></p>
+  
+        <input type="submit" value="Sign In" class="btn" style="background-color: black;">
+        
+        <div class="center">
+          <label for="login">Not a member? <a href="/login" style="color:blue">Register now</a></label>
+        </div>
+        
+      </form>
+
+    </div>
+    
+  </div>
+
+</div>
+
+  {% endblock %}
