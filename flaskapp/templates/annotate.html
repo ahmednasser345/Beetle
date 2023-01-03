@@ -73,7 +73,7 @@
               {% if error %}
               <span style="color: red">{{ error }}</span>
               {% else %}
-              <span style="color: red">No Data. Try again!</span>
+              <span style="color: red">Please choose a file.</span>
               {% endif %}
             </td>
           </tr>
@@ -144,15 +144,15 @@
   });
 
   $(".modal .btn-close").click(() => {
-    $(".marked-text").css({ "background-color": "" });
+    $(".marked-text").css({ "background-color": "e9ff32" });
     $(".modal").hide();
   });
 
   $(".modal .btn-save").click(() => {
     selectedText = $('input[name="flexRadioButton"]:checked').val();
     marks[marks.length - 1].textContent = selectedText;
-    marks[marks.length-1].style.cssText = "border: 1px solid green; border-radius: 5px; background-color: white;";
-    $(".marked-text").css({ "background-color": "#d69869" });
+    marks[marks.length-1].style.cssText = "border: 5px solid #8cff32; border-radius: 5px; background-color: white;";   //label styling
+    $(".marked-text").css({ "background-color": "#8cff32" });
     $(".modal").hide();
     $(document).click();
   });

@@ -84,6 +84,13 @@ def annotate_page():
 
 @app.route('/annotate/upload', methods = ['POST','GET'])
 def annotate_upload():
+  labels = []
+  try:
+    for label in db.labels.find({},{'_id': 0, 'label': 1}):
+      labels.append(label['label'])
+  except:
+    return jsonify({'error': 'DB error!'}), 400
+  
   if request.method == 'POST':
     tweets: list = []
     upload_file = request.files['upload_file']
@@ -98,12 +105,11 @@ def annotate_upload():
       except:
         return render_template('annotate.html', error='Unsupported file format! Try again.')
 
-    return render_template('annotate.html', tweets=tweets)
+    return render_template('annotate.html', tweets=tweets,labels = labels)
   
 
 @app.route('/profile/saveNewLabel')
 def save_new_label():
-  
   label = request.args.get('label')
   if db.labels.find_one({"label": label}):
     return jsonify({ "error": "The label already in use" }), 400
