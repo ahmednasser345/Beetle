@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request, jsonify
+from flask import render_template, redirect, url_for, request, jsonify ,send_file
 from flaskapp import app, login_required, db
 from flaskapp.user.routes import *
 from werkzeug.utils import secure_filename
@@ -106,7 +106,16 @@ def annotate_upload():
         return render_template('annotate.html', error='Unsupported file format! Try again.')
 
     return render_template('annotate.html', tweets=tweets,labels = labels)
+
   
+@app.route('/download')
+def download_file():
+	#path = "html2pdf.pdf"
+	#path = "info.xlsx"
+	path = "../scraped_tweets.csv"
+	#path = "sample.txt"
+	return send_file(path, as_attachment=True)
+
 
 @app.route('/profile/saveNewLabel')
 def save_new_label():

@@ -27,13 +27,13 @@
           />
         </a>
         <a href="/profile">
-            <img
-              src="../static/image/profile.png"
-              height="55px"
-              width="50px"
-              alt="profile"
-            />
-          </a>
+          <img
+            src="../static/image/profile.png"
+            height="55px"
+            width="50px"
+            alt="profile"
+          />
+        </a>
       </div>
       <form
         method="POST"
@@ -151,9 +151,18 @@
   $(".modal .btn-save").click(() => {
     selectedText = $('input[name="flexRadioButton"]:checked').val();
     marks[marks.length - 1].textContent = selectedText;
-    marks[marks.length-1].style.cssText = "border: 5px solid #8cff32; border-radius: 5px; background-color: white;";   //label styling
+    marks[marks.length - 1].style.cssText =
+      "border: 5px solid #8cff32; border-radius: 5px; background-color: white;"; //label styling
     $(".marked-text").css({ "background-color": "#8cff32" });
     $(".modal").hide();
     $(document).click();
   });
 </script>
+
+<div style="margin-left: 40%">
+  <p>
+    <a class="btn btn-dark" href="{{ url_for('.download_file') }}"
+      >Download scraped tweets</a
+    >
+  </p>
+</div>

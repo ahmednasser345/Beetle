@@ -167,7 +167,8 @@ class ScrapeTwitter:
     # numtweet = 50
     hashtag = request.args.get('hashtag')
     date_since = request.args.get('date')
-    numtweet = 90
+
+    numtweet = 50
     try:
       self.scrapeTwitter(api, hashtag, date_since, numtweet)
     except:
