@@ -1,96 +1,97 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <title>Profile Page</title>
-  <div class="card-wrapper">
+<div class="card-wrapper">
+  <div class="card" style="height: 750px">
 
-    <div class="card">
 
-      <h1 class="left" style="font-family: 'Aquire', sans-serif" >Profile</h1>
-      
-      <h3 class="left">Account details</h3>
-      
-      <!-- <img class="left" src="logo" width="50px" height="50px" alt="logo">
-      
-      <form name="detail_form">
+    <h1 class="left" style="font-family: 'Aquire', sans-serif">Profile</h1>
 
-        <label for="firstName">First name</label>
-        <input type="text" name="firstName" class="field" placeholder="{{ session['user']['firstName'] }}">
-        
-        <label for="lastName">Last name</label>
-        <input type="text" name="lastName" class="field" placeholder="{{ session['user']['lastName'] }}">
-        
-        <label for="userName">Username</label>
-        <input type="text" name="userName" class="field" placeholder="{{ session['user']['email'] }}">
-        
-        <label for="password">Password</label>
-        <input type="password" name="password" class="field" placeholder="{{ session['user']['password'] }}">
-        
-        <label for="password">Repeat Password</label>
-        <input type="password" name="repeatPassword" class="field">
 
-        <input type="submit" value="Update" class="btn">
-        
-      </form>
-      
-    </div> -->
-    <div style="border-radius: 20px; background-color:#EFEFEF; padding: 10px 20px;">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="float: right; margin-top: -5em"> 
+      <a href="/dashboard">
+        <img
+          src="../static/image/Home.png"
+          height="55px"
+          width="50px"
+          alt="dashboard"
+        />
+      </a>
+    </div>
+
+    <h3 class="left" style="font-family: 'euclid-circular-a', euclid-circular-a">Account details</h3>
+
+    <div
+      style="border-radius: 20px; background-color: #efefef; padding: 10px 20px"
+    >
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
         <div>
-          <div style="font-size: 0.8rem;">Name</div>
-          <div style="font-weight: bold;">
-            
-              {{ session['user']['firstName'] }} {{ session['user']['lastName'] }}
-                
+          <div style="font-size: 1rem; font-family: 'euclid-circular-a', euclid-circular-a; ">Name</div>
+          <div style="font-weight: bold">
+            {{ session['user']['firstName'] }} {{ session['user']['lastName'] }}
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+    <space>.</space>
+
+    <div
+      style="border-radius: 20px; background-color: #efefef; padding: 10px 20px"
+    >
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div>
+          <div style="font-size: 1rem ;font-family: 'euclid-circular-a', euclid-circular-a;">Email</div>
+          <div style="font-weight: bold">{{ session['user']['email'] }}</div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+    <div>
+      <space>.</space>
+    </div>
+
+    <div
+      style="border-radius: 20px; background-color: #efefef; padding: 10px 20px"
+    >
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div>
+          <div style="font-size: 1rem; font-family: 'euclid-circular-a', euclid-circular-a;">My labels</div>
+          <div style="font-weight: bold">
+            {% if labels %} {% for label in labels %}
+            <span>{{ label }} -</span>
+            {% endfor %} {% else %}
+            <span style="color: red">No label</span>
+            {% endif %}
           </div>
         </div>
         <div>
-
-      </div>  
-    </div>
-  </div>
-  <space>.</space>
-
-  <div style="border-radius: 20px; background-color:#EFEFEF; padding: 10px 20px;">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <div>
-        <div style="font-size: 0.8rem;">Email</div>
-        <div style="font-weight: bold;">
-          
-            {{ session['user']['email'] }}
-              
+          <span
+            style="color: green"
+            onclick="window.location.href='/profile/addLabel'"
+            >Update</span
+          >
         </div>
-        
-      </div>
-      <div>
-
-    </div>  
-  </div>
-</div>
-<div>
-
-  <space>.</space>
-</div>
-    
-    <div style="border-radius: 20px; background-color:#EFEFEF; padding: 10px 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="font-size: 0.8rem;">My labels</div>
-            <div style="font-weight: bold;">
-              {% if labels %}
-                {% for label in labels %}
-                  <span>{{ label }} -</span>
-                {% endfor %}
-              {% else %}
-                <span style="color: red">No label</span>
-              {% endif %}
-            </div>
-          </div>
-          <div>
-            <span style="color: green" onclick="window.location.href='/profile/addLabel'">Update</span>
-        </div>  
       </div>
     </div>
-</div>
+  </div>
 
-{% endblock %}
+  {% endblock %}
+</div>

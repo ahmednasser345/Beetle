@@ -18,12 +18,3 @@ def scrape():
 
   
 
-# @app.route('/user/login', methods=['POST','GET'])
-# def scrape():
-#   return scrapped_page()
-# @app.route('/dashboard/scrapped', methods=['POST','GET'])
-# def scrapped():
-#   num =20
-#   hashtag = request.form.get('hashtag')
-#   date=""
-#   return scrape(hashtag,date,num)

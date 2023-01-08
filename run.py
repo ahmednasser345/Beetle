@@ -47,20 +47,8 @@ def scrapped_page():
 def collect_page():
   return render_template('collect.html')
 
-@app.route('/search')
-def search_page():
-  return render_template('search.html')
 
-# @app.route('/annotate')
-# def annotate_page():
-#   with open('test.html', 'r') as f:
-#     html_string = f.read()
-#   with open('annotation-profile.json', 'r') as f:
-#     rules = json.load(f) 
-#   output = get_annotated_text(html_string, ParserConfig(annotation_rules=rules))
-#   # HtmlExtractor.__call__(HtmlExtractor, output)
-#   # HtmlExtractor._get_label_colors('heading', 'red')
-#   return render_template('annotate.html', output=[output])
+
 
 
 @app.route('/annotate')
@@ -110,10 +98,9 @@ def annotate_upload():
   
 @app.route('/download')
 def download_file():
-	#path = "html2pdf.pdf"
-	#path = "info.xlsx"
+	
 	path = "../scraped_tweets.csv"
-	#path = "sample.txt"
+
 	return send_file(path, as_attachment=True)
 
 

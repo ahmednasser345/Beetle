@@ -121,5 +121,5 @@ function downloadFile(url, fileName){
     });
 };
 document.querySelector('button').onclick =function () {
-  downloadFile('/Users/ahmednasser/Downloads/Beetle/scraped_tweets.csv', 'scraped.csv');
+  downloadFile('../Beetle/scraped_tweets.csv', 'scraped.csv');
 }
