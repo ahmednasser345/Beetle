@@ -19,6 +19,7 @@ def login_page():
   return render_template('login.html')
 
 @app.route('/profile')
+@login_required
 def profile():
   labels = []
   try:
@@ -30,6 +31,7 @@ def profile():
   return render_template('profile.html', labels=labels)
 
 @app.route('/profile/addLabel')
+@login_required
 def add_label():
   return render_template('add-label.html')
 
@@ -39,11 +41,13 @@ def dashboard():
   return render_template('dashboard.html')
 
 @app.route('/scrapped')
+@login_required
 def scrapped_page():
   data = pd.read_csv('scraped_tweets.csv')
   return render_template('index.html', tables=[data.to_html()], titles=[''])
 
 @app.route('/collect')
+@login_required
 def collect_page():
   return render_template('collect.html')
 
@@ -52,6 +56,7 @@ def collect_page():
 
 
 @app.route('/annotate')
+@login_required
 def annotate_page():
   labels = []
   try:
@@ -71,6 +76,7 @@ def annotate_page():
 
 
 @app.route('/annotate/upload', methods = ['POST','GET'])
+@login_required
 def annotate_upload():
   labels = []
   try:
@@ -97,6 +103,7 @@ def annotate_upload():
 
   
 @app.route('/download')
+@login_required
 def download_file():
 	
 	path = "../scraped_tweets.csv"
@@ -105,6 +112,7 @@ def download_file():
 
 
 @app.route('/profile/saveNewLabel')
+@login_required
 def save_new_label():
   label = request.args.get('label')
   if db.labels.find_one({"label": label}):

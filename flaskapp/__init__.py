@@ -19,6 +19,7 @@ def login_required(f):
     if 'logged_in' in session:
       return f(*args, **kwargs)
     else:
+      print("not logged in")
       return redirect('/')
   
   return wrap
