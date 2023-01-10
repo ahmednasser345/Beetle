@@ -1,4 +1,5 @@
-
+# Notes
+You must put your credentials in models.py in order to collect tweets
 
 
 # Pages
