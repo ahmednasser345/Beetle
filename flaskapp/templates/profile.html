@@ -76,22 +76,31 @@
           <div style="font-size: 1rem; font-family: 'euclid-circular-a', euclid-circular-a;">My labels</div>
           <div style="font-weight: bold">
             {% if labels %} {% for label in labels %}
-            <span>{{ label }} -</span>
+            <span>{{ label }} – </span>
             {% endfor %} {% else %}
-            <span style="color: red">No label</span>
+            <span style="color: red">No labels</span>
             {% endif %}
           </div>
         </div>
         <div>
           <span
+            
             style="color: green"
             onclick="window.location.href='/profile/addLabel'"
             >Update</span
           >
         </div>
       </div>
+
+    </div>
+    <div class="center">
+      <a href="/user/signout"  
+      value="Sign out"
+      class="btn"
+      style="background-color: black; margin-top: 90px;" >Sign Out</a>
     </div>
   </div>
 
-  {% endblock %}
+
 </div>
+{% endblock %}
