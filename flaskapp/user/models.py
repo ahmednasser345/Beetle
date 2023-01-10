@@ -145,10 +145,10 @@ class ScrapeTwitter:
   def scrape(self):   
     # Enter your own credentials obtained
     # from your developer account
-    consumer_key = "k9yAXXOh2oUoaJ8GWLq6QYzK7"
-    consumer_secret = "7ThFqTMo5trPGGqsnJxz9MPvDtlchzoJmwGD84J6lrA2dHNl3A"
-    access_key = "468641184-JBkHmVXvdsMe18BkiOPd9RQlRcYwLIqHvNceCQVx"
-    access_secret = "6GQHBti29cFPFNywD7RzIVEhDQbFEpgWDaPVeZKwefLkJ"
+    consumer_key = ""
+    consumer_secret = ""
+    access_key = ""
+    access_secret = ""
 
     try:
       auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -177,7 +177,7 @@ class ScrapeTwitter:
     
     try:
       public_tweets = api.home_timeline()
-      tweets = api.user_timeline(screen_name="ahmednasserr__") # law 3ayez ageb tweets beta3t el user da bas
+      tweets = api.user_timeline(screen_name="cristiano") # law 3ayez ageb tweets beta3t el user da bas
       print(public_tweets)
     except:
       print("Calling the Twitter API(api.home_timeline & api.user_timeline) has failed.")
