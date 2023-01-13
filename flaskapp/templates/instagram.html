@@ -1,0 +1,61 @@
+{% extends "base.html" %} {% block content %}
+<title>Instagram Page</title>
+
+<div class="card-wrapper">
+  <div class="card" style="height: 750px">
+    <h1 class="left" style="font-family: 'Aquire', sans-serif">Instagram</h1>
+    <div style="float: right; margin-top: -5em">
+      <a href="/dashboard">
+        <img
+          src="../static/image/Home.png"
+          height="55px"
+          width="50px"
+          alt="dashboard"
+        />
+      </a>
+    </div>
+
+    <div class="center">
+      <img src="/static/image/logo.png" width="60" height="90" alt="logo" />
+    </div>
+
+    <div style="margin: 0 10%">
+      <form name="form_instagram">
+        <div style="font-size: 1rem; font-weight: bold; font-family: 'euclid-circular-a', euclid-circular-a;">Username</div>
+
+        <input
+          type="text"
+          name="InstagramHashtag"
+          class="field"
+          placeholder="#Egypt"
+          required
+        />
+
+
+
+          
+        <div style="font-size: 1rem; font-weight: bold; font-family: 'euclid-circular-a', euclid-circular-a;">Date</div>
+
+        <input
+          type="text"
+          name="InstagramDate"
+          class="field"
+          placeholder="YYYY-MM--DD"
+          required
+        />
+        
+
+        <p class="error error--hidden"></p>
+
+        <input
+          type="submit"
+          value="Search"
+          class="btn btn-dark"
+          style="background-color: black"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
