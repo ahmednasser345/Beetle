@@ -1,14 +1,11 @@
-from flask import render_template, redirect, url_for, request, jsonify ,send_file
+from flask import render_template, redirect, url_for, request, jsonify ,send_file , session
 from flaskapp import app, login_required, db
 from flaskapp.user.routes import *
 from werkzeug.utils import secure_filename
 import pandas as pd
 import json
 import uuid
-# for annotation
-import urllib.request
-from inscriptis import get_annotated_text, ParserConfig
-from inscriptis.annotation.output.html import HtmlExtractor
+
 
 @app.route('/')
 def home():
@@ -22,9 +19,12 @@ def login_page():
 @login_required
 def profile():
   labels = []
+  print(session['user'])
   try:
-    for label in db.labels.find({},{'_id': 0, 'label': 1}):
-      labels.append(label['label'])
+    currentUser= db.users.find_one({'_id': session["user"]["_id"]})
+    print(currentUser)
+    print("CURRENT",currentUser['labels'])
+    labels=currentUser['labels']
   except:
     return jsonify({'error': 'DB error!'}), 400
 
@@ -40,17 +40,18 @@ def add_label():
 def dashboard():
   return render_template('dashboard.html')
 
-@app.route('/scrapped')
-@login_required
-def scrapped_page():
-  data = pd.read_csv('scraped_tweets.csv')
-  return render_template('index.html', tables=[data.to_html()], titles=[''])
+
 
 @app.route('/collect')
 @login_required
 def collect_page():
   return render_template('collect.html')
 
+
+@app.route('/choose')
+@login_required
+def choose_page():
+  return render_template('choose.html')
 
 
 
@@ -60,8 +61,10 @@ def collect_page():
 def annotate_page():
   labels = []
   try:
-    for label in db.labels.find({},{'_id': 0, 'label': 1}):
-      labels.append(label['label'])
+    currentUser= db.users.find_one({'_id': session["user"]["_id"]})
+    print(currentUser)
+    print("CURRENT",currentUser['labels'])
+    labels=currentUser['labels']
   except:
     return jsonify({'error': 'DB error!'}), 400
 
@@ -80,8 +83,9 @@ def annotate_page():
 def annotate_upload():
   labels = []
   try:
-    for label in db.labels.find({},{'_id': 0, 'label': 1}):
-      labels.append(label['label'])
+    currentUser= db.users.find_one({'_id': session["user"]["_id"]})
+  
+    labels=currentUser['labels']
   except:
     return jsonify({'error': 'DB error!'}), 400
   
@@ -115,13 +119,20 @@ def download_file():
 @login_required
 def save_new_label():
   label = request.args.get('label')
-  if db.labels.find_one({"label": label}):
-    return jsonify({ "error": "The label already in use" }), 400
 
-  if db.labels.insert_one({ "_id": uuid.uuid4().hex, "label": label}):
+
+  
+  if  db.users.update_one({ "_id": session['user']['_id'] },{ "$push": { "labels": label }}):
     return jsonify({'success': 'A label is saved successfully!'}), 200 
 
   return jsonify({ "error": "Adding a new label is failed" }), 400
+
+
+@app.route('/instagram')
+def instagram_page():
+  print(session['user'])
+  return render_template('instagram.html')
+
 
 if __name__ == '__main__':
   app.run(host = "0.0.0.0",port = 3000, debug=True)
