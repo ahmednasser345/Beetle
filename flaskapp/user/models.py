@@ -6,6 +6,11 @@ import pandas as pd
 import tweepy
 import json
 import csv
+from datetime import datetime
+from itertools import dropwhile, takewhile
+
+import instaloader
+from instaloader import *
 
 class User:
 
@@ -24,7 +29,9 @@ class User:
       "firstName": request.form.get('firstName'),
       "lastName": request.form.get('lastName'),
       "email": request.form.get('email'),
-      "password": request.form.get('password')
+      "password": request.form.get('password'),
+      "labels": []
+
     }
     
 
@@ -42,7 +49,7 @@ class User:
   
   def signout(self):
     session.clear()
-    return redirect('/')
+    return redirect('/login')
   
   def login(self):
 
@@ -88,7 +95,7 @@ class ScrapeTwitter:
     # The number of tweets can be
     # restricted using .items(number of tweets)
     tweets = tweepy.Cursor(api.search_tweets,
-                        words, lang="en",
+                        q=words, lang="en",
                         since_id=date_since,
                         tweet_mode='extended').items(numtweet)
 
@@ -177,7 +184,7 @@ class ScrapeTwitter:
     
     try:
       public_tweets = api.home_timeline()
-      tweets = api.user_timeline(screen_name="cristiano") # law 3ayez ageb tweets beta3t el user da bas
+      tweets = api.user_timeline(screen_name="ahmednasserr__") # law 3ayez ageb tweets beta3t el user da bas
       print(public_tweets)
     except:
       print("Calling the Twitter API(api.home_timeline & api.user_timeline) has failed.")
@@ -201,3 +208,56 @@ class ScrapeTwitter:
       
 
 
+# class ScrapeInstagram:
+
+#   # Use parameters to save diffrent metadata
+#   L = Instaloader()
+#   L.login("beetle_ahmednasser","Ahmednasser2001")
+#   PROFILE = "beetle_ahmednasser"
+#   profile = Profile.from_username(L.context, PROFILE)
+
+#   def downloadProfilePhoto(dp):
+#     L = Instaloader()
+#     L.login("beetle_ahmednasser","Ahmednasser2001")
+#     PROFILE = "beetle_ahmednasser"
+#     profile = Profile.from_username(L.context, PROFILE)
+
+    
+#     L.download_profile(dp , profile_pic_only=True)
+
+#   def getPosts(hashtag):
+#     L = Instaloader()
+#     L.login("beetle_ahmednasser","Ahmednasser2001")
+
+#     PROFILE = "beetle_ahmednasser"
+
+#     profile = Profile.from_username(L.context, PROFILE)
+
+#     #Get posts with the hashtag
+#     posts = L.get_hashtag_posts(hashtag)
+
+##     #Iterate over posts
+#     num=0
+#     for post in posts:
+#       print(post.date)
+#       print(post.caption)
+#       if num==10:
+#         break
+#       num+=1
+
+
+
+#   def downloadProfilePosts(self):
+#     L = Instaloader()
+#     L.login("beetle_ahmednasser","Ahmednasser2001")
+
+#     PROFILE = "beetle_ahmednasser"
+
+#     profile = Profile.from_username(L.context, PROFILE)
+#     posts_stored_by_likes = sorted(profile.get_posts(), key= lambda post: post.likes , reverse=True )
+#     #To download posts
+#     for post in posts_stored_by_likes:
+#       L.download_post(post, PROFILE)
+
+
+#   downloadProfilePhoto("ahmednasserr__")
