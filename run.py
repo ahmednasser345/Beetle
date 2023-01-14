@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 import pandas as pd
 import json
 import uuid
+import csv
 
 
 @app.route('/')
@@ -62,14 +63,13 @@ def annotate_page():
   labels = []
   try:
     currentUser= db.users.find_one({'_id': session["user"]["_id"]})
-    print(currentUser)
-    print("CURRENT",currentUser['labels'])
     labels=currentUser['labels']
   except:
     return jsonify({'error': 'DB error!'}), 400
 
   try:
-    data = pd.read_csv('scraped_tweets.csv')
+    filename=session['user']['email']+'.csv'
+    data = pd.read_csv(filename)
     data.rename( columns={'Unnamed: 0':'ID'}, inplace=True ) 
   except:
     return redirect(url_for('dashboard'))
@@ -109,8 +109,9 @@ def annotate_upload():
 @app.route('/download')
 @login_required
 def download_file():
-	
-	path = "../scraped_tweets.csv"
+	currentUser=session['user']['email']
+  
+	path = "../"+currentUser+'.csv'
 
 	return send_file(path, as_attachment=True)
 
@@ -130,7 +131,6 @@ def save_new_label():
 
 @app.route('/instagram')
 def instagram_page():
-  print(session['user'])
   return render_template('instagram.html')
 
 
