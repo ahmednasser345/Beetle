@@ -144,18 +144,19 @@ class ScrapeTwitter:
             # Function call to print tweet data on screen
             self.printtweetdata(i, ith_tweet)
             i = i+1
-    filename = 'scraped_tweets.csv'
-
+    #filename = 'scraped_tweets.csv'
+    currentUser=session['user']['email']
+    filename=currentUser+'.csv'
     # we will save our database as a CSV file.
     db.to_csv(filename)
           
   def scrape(self):   
     # Enter your own credentials obtained
     # from your developer account
-    consumer_key = ""
-    consumer_secret = ""
-    access_key = ""
-    access_secret = ""
+    consumer_key = "k9yAXXOh2oUoaJ8GWLq6QYzK7"
+    consumer_secret = "7ThFqTMo5trPGGqsnJxz9MPvDtlchzoJmwGD84J6lrA2dHNl3A"
+    access_key = "468641184-JBkHmVXvdsMe18BkiOPd9RQlRcYwLIqHvNceCQVx"
+    access_secret = "6GQHBti29cFPFNywD7RzIVEhDQbFEpgWDaPVeZKwefLkJ"
 
     try:
       auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -208,35 +209,112 @@ class ScrapeTwitter:
       
 
 
-# class ScrapeInstagram:
+class ScrapeInstagram:
 
-#   # Use parameters to save diffrent metadata
-#   L = Instaloader()
-#   L.login("beetle_ahmednasser","Ahmednasser2001")
-#   PROFILE = "beetle_ahmednasser"
-#   profile = Profile.from_username(L.context, PROFILE)
+  # # Use parameters to save diffrent metadata
+  # L = Instaloader()
+  # L.login("beetle_ahmednasser","Ahmednasser2001")
+  # PROFILE = "beetle_ahmednasser"
+  # profile = Profile.from_username(L.context, PROFILE)
 
-#   def downloadProfilePhoto(dp):
-#     L = Instaloader()
-#     L.login("beetle_ahmednasser","Ahmednasser2001")
-#     PROFILE = "beetle_ahmednasser"
-#     profile = Profile.from_username(L.context, PROFILE)
+  # def downloadProfilePhoto(dp):
+  #   L = Instaloader()
+  #   L.login("beetle_ahmednasser","Ahmednasser2001")
+  #   PROFILE = "beetle_ahmednasser"
+  #   profile = Profile.from_username(L.context, PROFILE)
 
     
-#     L.download_profile(dp , profile_pic_only=True)
+  #   L.download_profile(dp , profile_pic_only=True)
 
-#   def getPosts(hashtag):
+  def getPosts(self):
+    L = Instaloader()
+    try:
+      L.login("beetle_ahmednasser","Ahmednasser2001")
+      PROFILE = "beetle_ahmednasser"
+      profile = Profile.from_username(L.context, PROFILE)
+    except:
+      print("Instagram authentication failed!")
+      return jsonify({ "error": "Instagram API is not available now, please try again later." }), 400
+
+    instagram_hashtag = request.args.get('InstagramHashtag')
+    #instagram_date = request.args.get('InstagramDate')
+
+    #Get posts with the hashtag
+    posts = L.get_hashtag_posts(instagram_hashtag)
+    columns = ['Time', 'User', 'Post Caption']
+    # Initialize a list
+    data = []
+    
+
+#     #Iterate over posts
+    num=0
+    for post in posts:
+      if(num==50):
+        break
+      data.append([post.date, post.profile , post.caption])
+      num=num+1
+
+    df = pd.DataFrame(data, columns=columns)
+    currentUser=session['user']['email']
+    filename=currentUser+'.csv'
+
+    df.to_csv(filename)
+    return jsonify({'success': 'Instagram API calling is done successfully!'}), 200   
+      
+
+
+
+  # def downloadProfilePosts(self):
+  #   L = Instaloader()
+  #   L.login("beetle_ahmednasser","Ahmednasser2001")
+
+  #   PROFILE = "beetle_ahmednasser"
+
+  #   profile = Profile.from_username(L.context, PROFILE)
+  #   posts_stored_by_likes = sorted(profile.get_posts(), key= lambda post: post.likes , reverse=True )
+
+  #   columns = ['Time', 'User', 'Post']
+  #   # Initialize a list
+  #   data = []
+  #   #To download posts
+  #   for post in posts_stored_by_likes:
+  #     L.download_post(post, PROFILE)
+      
+
+
+#   def instagramScrape(self):
 #     L = Instaloader()
-#     L.login("beetle_ahmednasser","Ahmednasser2001")
+#     try:
+#       L.login("beetle_ahmednasser","Ahmednasser2001")
+#       PROFILE = "beetle_ahmednasser"
+#       profile = Profile.from_username(L.context, PROFILE)
+#     except:
+#       print("Instagram authentication failed!")
+#       return jsonify({ "error": "Calling the Instagram API has failed." }), 400
 
-#     PROFILE = "beetle_ahmednasser"
 
-#     profile = Profile.from_username(L.context, PROFILE)
+#     instagram_hashtag = request.args.get('InstagramHashtag')
+#     instagram_date = request.args.get('InstagramDate')
 
-#     #Get posts with the hashtag
-#     posts = L.get_hashtag_posts(hashtag)
+#     columns = ['Time', 'User', 'Post']
+#     # Initialize a list
+#     data = []
+#     # Initialize a counter for the serial number
+#     i= 1
+#     for post in posts:
+#       data.append([tweet.created_at, tweet.user.screen_name, tweet.text])
+#       print(f"{i}. User: {tweet.user.screen_name}\n Tweet: {tweet.text}")
+#       i +=1
+#     df = pd.DataFrame(data, columns=columns)
+#     #print(df)
 
-##     #Iterate over posts
+#     df.to_csv('instagram_posts.csv')
+#     return jsonify({'success': 'Instagram API calling is done successfully!'}), 200   
+
+#      #Get posts with the hashtag
+#     posts = L.get_hashtag_posts(instagram_hashtag)
+
+# #     #Iterate over posts
 #     num=0
 #     for post in posts:
 #       print(post.date)
@@ -244,20 +322,3 @@ class ScrapeTwitter:
 #       if num==10:
 #         break
 #       num+=1
-
-
-
-#   def downloadProfilePosts(self):
-#     L = Instaloader()
-#     L.login("beetle_ahmednasser","Ahmednasser2001")
-
-#     PROFILE = "beetle_ahmednasser"
-
-#     profile = Profile.from_username(L.context, PROFILE)
-#     posts_stored_by_likes = sorted(profile.get_posts(), key= lambda post: post.likes , reverse=True )
-#     #To download posts
-#     for post in posts_stored_by_likes:
-#       L.download_post(post, PROFILE)
-
-
-#   downloadProfilePhoto("ahmednasserr__")
