@@ -111,6 +111,7 @@
 <script src="/static/js/jquery.js"></script>
 <script>
   var marks = [];
+  //var selectedWord=[];
   $(".form-control").change(() => {
     $(".table-upload-error").html(
       "<span style='color: green'>Please upload this file</span>"
@@ -121,7 +122,7 @@
       );
     }
   });
-
+  var x;
   $(".annotation-text").dblclick((e) => {
     var range = window.getSelection().getRangeAt(0),
       span = document.createElement("span");
@@ -129,6 +130,7 @@
     // span.style.cssText = "background-color: #d69869;";
     span.appendChild(range.extractContents());
     annotation = document.createElement("span");
+    x=span.textContent; //Selected word that the user double clicked on
     annotation.textContent = "";
     marks.push(annotation);
     span.append(annotation);
@@ -140,8 +142,11 @@
     $(".marked-text").css({ "background-color": "e9ff32" });
     $(".modal").hide();
   });
-
+  var selectedWord=[];
+  var selectedWords=[];
   $(".modal .btn-save").click(() => {
+    selectedWord=[];
+    
     selectedText = $('input[name="flexRadioButton"]:checked').val();
     marks[marks.length - 1].textContent = selectedText;
     marks[marks.length - 1].style.cssText =
@@ -149,7 +154,26 @@
     $(".marked-text").css({ "background-color": "#8cff32" });
     $(".modal").hide();
     $(document).click();
+    selectedWord.push("Selected Text: "+ x+" | label: "+selectedText);
+    selectedWords.push(selectedWord);
+
+    console.log(selectedWord);
+    
+    $.ajax({
+    type: 'POST',
+    url: '/annotate/saveAnnotation',
+    data: JSON.stringify({annotationss : selectedWords}),
+    contentType:"application/json",
+    success: function(response) {
+        // do something with the response
+        //alert("here");
+    }
+
   });
+  
+ 
+  });
+
 </script>
 
 <div style="margin-left: 42%">
@@ -159,4 +183,3 @@
     >
   </p>
 </div>
-
