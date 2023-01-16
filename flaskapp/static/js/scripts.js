@@ -62,36 +62,56 @@ $("form[name=login_form").submit(function(e) {
   e.preventDefault();
 });
 
-$("form[name=scrape").submit(function(e) {
+// $("form[name=scrape").submit(function(e) {
 
-  var $form = $(this);
-  var $error = $form.find(".error");
-  var data = $form.serialize();
+//   var $form = $(this);
+//   var $error = $form.find(".error");
+//   var data = $form.serialize();
 
-  $.ajax({
-    url: "/user/dashboard",
-    type: "GET",
-    data: data,
-    dataType: "json",
-    success: function(resp) {
-      window.location.href = "/scrapped";
-    },
-    error: function(resp) {
-      $error.text(resp.responseJSON.error).removeClass("error--hidden");
-    }
-  });
+//   $.ajax({
+//     url: "/user/dashboard",
+//     type: "GET",
+//     data: data,
+//     dataType: "json",
+//     success: function(resp) {
+//       window.location.href = "/scrapped";
+//     },
+//     error: function(resp) {
+//       $error.text(resp.responseJSON.error).removeClass("error--hidden");
+//     }
+//   });
 
-  e.preventDefault();
-});
+//   e.preventDefault();
+// });
 
 
 $("form[name=form_scrapped").submit(function(e) {
   var $form = $(this);
   var $error = $form.find(".error");
-  $error.text("Scraping the Twitter...").removeClass("error--hidden").css('color', 'green')
+  $error.text("Scraping Twitter...").removeClass("error--hidden").css('color', 'green')
   var data = $form.serialize();
   $.ajax({
-    url: "/dashboard/scrapped",
+    url: "/dashboard/twitter",
+    type: "GET",
+    data: data,
+    dataType: "json",
+    success: function(resp) {
+      window.location.href = "/annotate";
+    },
+    error: function(resp) {
+      $error.text(resp.responseJSON.error).removeClass("error--hidden").css('color', 'red');
+    }
+  });
+
+  e.preventDefault();
+});
+$("form[name=form_instagram").submit(function(e) {
+  var $form = $(this);
+  var $error = $form.find(".error");
+  $error.text("Scraping Instagram...").removeClass("error--hidden").css('color', 'green')
+  var data = $form.serialize();
+  $.ajax({
+    url: "/dashboard/instagram",
     type: "GET",
     data: data,
     dataType: "json",
@@ -121,5 +141,23 @@ function downloadFile(url, fileName){
     });
 };
 document.querySelector('button').onclick =function () {
-  downloadFile('../Beetle/scraped_tweets.csv', 'scraped.csv');
+  downloadFile('ahmednasser@gmail.comallData.csv', 'scraped.csv');
+}
+
+function downloadFile2(url, fileName){
+  fetch(url, { method: 'get', mode: 'no-cors', referrerPolicy: 'no-referrer' })
+    .then(res => res.blob())
+    .then(res => {
+      const aElement = document.createElement('a');
+      aElement.setAttribute('download2', fileName);
+      const href = URL.createObjectURL(res);
+      aElement.href = href;
+      // aElement.setAttribute('href', href);
+      aElement.setAttribute('target', '_blank');
+      aElement.click();
+      URL.revokeObjectURL(href);
+    });
+};
+document.querySelector('button').onclick =function () {
+  downloadFile('ahmednasser@gmail.comallData.csv', 'scraped.csv');
 }
