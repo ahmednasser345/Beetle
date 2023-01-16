@@ -19,12 +19,13 @@ def login_page():
 @app.route('/profile')
 @login_required
 def profile():
+  
   labels = []
-  print(session['user'])
+  #print(session['user'])
   try:
     currentUser= db.users.find_one({'_id': session["user"]["_id"]})
-    print(currentUser)
-    print("CURRENT",currentUser['labels'])
+    #print(currentUser)
+    #print("CURRENT",currentUser['labels'])
     labels=currentUser['labels']
   except:
     return jsonify({'error': 'DB error!'}), 400
@@ -111,9 +112,23 @@ def annotate_upload():
 def download_file():
 	currentUser=session['user']['email']
   
+	path = "../"+currentUser+'allData.csv'
+
+	return send_file(path, as_attachment=True)
+
+
+
+@app.route('/download2')
+@login_required
+def download_file2():
+	currentUser=session['user']['email']
+  
 	path = "../"+currentUser+'.csv'
 
 	return send_file(path, as_attachment=True)
+
+
+
 
 
 @app.route('/profile/saveNewLabel')
